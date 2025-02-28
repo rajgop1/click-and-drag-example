@@ -6,50 +6,63 @@
     <title>Click and Drag Logging</title>
     <style>
         body {
-            margin: 0;
-            overflow: hidden;
+            margin: 0; /* Remove default margin so the box moves smoothly */
+            overflow: hidden; /* Prevent scrolling when dragging */
         }
         .draggable {
-            width: 100px;
-            height: 100px;
-            background-color: blue;
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            cursor: grab;
+            width: 100px; /* Box width */
+            height: 100px; /* Box height */
+            background-color: blue; /* Make it blue for visibility */
+            position: absolute; /* Absolute positioning to move freely */
+            top: 50px; /* Start position */
+            left: 50px; /* Start position */
+            cursor: grab; /* Show a hand cursor so Apoorva knows it’s draggable */
         }
     </style>
 </head>
 <body>
 
+    <!-- 🟦 This is our draggable box, Apoorva! -->
     <div class="draggable"></div>
 
     <script>
+        // 🎯 First, we select the box element
         const box = document.querySelector(".draggable");
-        let isDragging = false;
-        let offsetX, offsetY;
-        let count = 0; // Counter for logging
 
+        // 🏁 These variables help track whether dragging is happening or not
+        let isDragging = false; // 🚫 At the start, we are NOT dragging
+        let offsetX, offsetY; // 📍 These will store the difference between click point and box position
+        let count = 0; // 📊 This keeps track of how many times the mouse moves while dragging
+
+        // 🖱️ When we click on the box, start dragging!
         box.addEventListener("mousedown", (e) => {
-            isDragging = true;
-            offsetX = e.clientX - box.offsetLeft;
-            offsetY = e.clientY - box.offsetTop;
-            box.style.cursor = "grabbing";
-            count = 0; // Reset count on new drag
+            isDragging = true; // ✅ Set dragging mode to ON
+            offsetX = e.clientX - box.offsetLeft; // 🏗️ Store how far mouse is from the box (X-axis)
+            offsetY = e.clientY - box.offsetTop; // 🏗️ Store how far mouse is from the box (Y-axis)
+            box.style.cursor = "grabbing"; // 🖐️ Change cursor to show we are grabbing
+            count = 0; // 🔄 Reset counter because this is a new drag
+
+            console.log("Apoorva, dragging started! 🚀"); // 🎉 Let's tell Apoorva the fun has started!
         });
 
+        // 🎯 This runs when the mouse moves while dragging
         document.addEventListener("mousemove", (e) => {
-            if (isDragging) {
+            if (isDragging) { // ✅ Run this ONLY if dragging is true
+                // 🏗️ Move the box according to the new mouse position
                 box.style.left = `${e.clientX - offsetX}px`;
                 box.style.top = `${e.clientY - offsetY}px`;
-                count++;
-                console.log("Apporva", count); // Logging the count while dragging
+                
+                count++; // 📊 Increase count on every move
+                console.log("Apoorva", count); // 🖥️ Print count in console
             }
         });
 
+        // 🛑 When the mouse is released, stop dragging
         document.addEventListener("mouseup", () => {
-            isDragging = false;
-            box.style.cursor = "grab";
+            isDragging = false; // 🚫 Dragging mode OFF
+            box.style.cursor = "grab"; // ✋ Change cursor back to normal
+
+            console.log("Apoorva, dragging stopped! 🎯 Final count:", count); // 🎉 Apoorva, we stopped dragging!
         });
     </script>
 
