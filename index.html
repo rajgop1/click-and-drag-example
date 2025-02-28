@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click and Drag Logging</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .draggable {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="draggable"></div>
+
+    <script>
+        const box = document.querySelector(".draggable");
+        let isDragging = false;
+        let offsetX, offsetY;
+        let count = 0; // Counter for logging
+
+        box.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - box.offsetLeft;
+            offsetY = e.clientY - box.offsetTop;
+            box.style.cursor = "grabbing";
+            count = 0; // Reset count on new drag
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+                box.style.left = `${e.clientX - offsetX}px`;
+                box.style.top = `${e.clientY - offsetY}px`;
+                count++;
+                console.log("Apporva", count); // Logging the count while dragging
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            box.style.cursor = "grab";
+        });
+    </script>
+
+</body>
+</html>
